@@ -1,12 +1,4 @@
-export interface User {
-  id: number;
-  username: string;
-  email: string;
-  role: 'admin' | 'moderator' | 'user';
-  status: 'active' | 'inactive' | 'suspended';
-  createdAt: string;
-  lastLogin?: string;
-}
+import type { User } from './model';
 
 const STORAGE_KEY = 'users_data';
 
@@ -24,7 +16,7 @@ const saveUsers = (users: User[]) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
 };
 
-export const userService = {
+export const userApi = {
   async getAll(): Promise<User[]> {
     return getUsers();
   },
@@ -35,7 +27,6 @@ export const userService = {
   },
 
   async create(userData: Omit<User, 'id' | 'createdAt'>): Promise<User> {
-
     const users = getUsers();
 
     if (users.some(u => u.username === userData.username)) {
@@ -87,15 +78,5 @@ export const userService = {
     }
 
     saveUsers(filtered);
-  },
-
-  async checkUsernameAvailable(username: string): Promise<boolean> {
-    const users = getUsers();
-    return !users.some(u => u.username.toLowerCase() === username.toLowerCase());
-  },
-
-  async checkEmailAvailable(email: string): Promise<boolean> {
-    const users = getUsers();
-    return !users.some(u => u.email.toLowerCase() === email.toLowerCase());
   },
 };

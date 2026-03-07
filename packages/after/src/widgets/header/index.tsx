@@ -1,9 +1,9 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 export const Header: React.FC = () => {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background shadow-sm">
+    <header className={cn('sticky top-0 z-50 w-full border-b bg-background shadow-sm')}>
       <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#1976d2] text-white text-xl font-bold">

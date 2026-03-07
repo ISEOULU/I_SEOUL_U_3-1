@@ -1,14 +1,4 @@
-export interface Post {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  category: string;
-  status: 'draft' | 'published' | 'archived';
-  views: number;
-  createdAt: string;
-  updatedAt?: string;
-}
+import type { Post } from './model';
 
 const STORAGE_KEY = 'posts_data';
 
@@ -27,7 +17,7 @@ const savePosts = (posts: Post[]) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
 };
 
-export const postService = {
+export const postApi = {
   async getAll(): Promise<Post[]> {
     return getPosts();
   },
@@ -38,7 +28,6 @@ export const postService = {
   },
 
   async create(postData: Omit<Post, 'id' | 'createdAt' | 'views'>): Promise<Post> {
-
     const posts = getPosts();
 
     if (postData.title.length < 5) {
