@@ -401,7 +401,7 @@ export const ManagementContent: React.FC = () => {
             <DialogHeader>
               <DialogTitle>새 {entityType === 'user' ? '사용자' : '게시글'} 만들기</DialogTitle>
             </DialogHeader>
-            <div className="space-y-4 py-4">
+            <div className="space-y-4 px-6 py-4">
               {entityType === 'user' ? (
                 <>
                   <FormField label="사용자명" required>
@@ -506,7 +506,7 @@ export const ManagementContent: React.FC = () => {
             <DialogHeader>
               <DialogTitle>{entityType === 'user' ? '사용자' : '게시글'} 수정</DialogTitle>
             </DialogHeader>
-            <div className="space-y-4 py-4">
+            <div className="space-y-4 px-6 py-4">
               {selectedItem && (
                 <Alert>
                   <AlertTitle>정보</AlertTitle>
