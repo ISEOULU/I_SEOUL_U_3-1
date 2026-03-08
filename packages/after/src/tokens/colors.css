@@ -129,6 +129,13 @@
   --neutral-text-body: var(--gray-800);
   --neutral-dark: var(--gray-900);
 
+  /* Table Specific Tokens */
+  --table-header-bg: var(--neutral-bg-flat);
+  --table-border: var(--alpha-black-12);
+  --table-row-border: var(--alpha-black-8);
+  --table-row-hover: var(--alpha-black-4);
+  --table-row-striped: var(--neutral-bg-flat);
+
   /* Card Specific Shadows (Material-like) */
   --shadow-card-default:
     0px 2px 1px -1px var(--alpha-black-20),
@@ -215,6 +222,13 @@
   --color-neutral-hover: var(--neutral-hover);
   --color-neutral-text-body: var(--neutral-text-body);
   --color-neutral-dark: var(--neutral-dark);
+
+  /* Table Colors */
+  --color-table-header-bg: var(--table-header-bg);
+  --color-table-border: var(--table-border);
+  --color-table-row-border: var(--table-row-border);
+  --color-table-row-hover: var(--table-row-hover);
+  --color-table-row-striped: var(--table-row-striped);
 
   /* Card Shadows */
   --shadow-card-default: var(--shadow-card-default);

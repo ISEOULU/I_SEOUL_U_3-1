@@ -1,4 +1,12 @@
 import React, { useState, useEffect } from "react";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "../ui/table";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
@@ -9,19 +17,18 @@ interface Column {
   sortable?: boolean;
 }
 
-// 🚨 Bad Practice: UI 컴포넌트가 도메인 타입을 알고 있음
-interface TableProps {
+interface TableContainerProps {
   columns?: Column[];
   data?: any[];
   striped?: boolean;
-  bordered?: boolean;
+  bordered?: boolean; // Note: Bordered implementation in UI might need adjustment if true
   hover?: boolean;
   pageSize?: number;
   searchable?: boolean;
   sortable?: boolean;
   onRowClick?: (row: any) => void;
 
-  // 🚨 도메인 관심사 추가
+  // Domain Concerns
   entityType?: "user" | "post";
   onEdit?: (item: any) => void;
   onDelete?: (id: number) => void;
@@ -30,12 +37,11 @@ interface TableProps {
   onRestore?: (id: number) => void;
 }
 
-export const Table: React.FC<TableProps> = ({
+export const TableContainer: React.FC<TableContainerProps> = ({
   columns,
   data = [],
   striped = false,
-  bordered = false,
-  hover = false,
+  hover = true,
   pageSize = 10,
   searchable = false,
   sortable = false,
@@ -97,15 +103,6 @@ export const Table: React.FC<TableProps> = ({
 
   const totalPages = Math.ceil(filteredData.length / pageSize);
 
-  const tableClasses = [
-    "table",
-    striped && "table-striped",
-    bordered && "table-bordered",
-    hover && "table-hover",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   const actualColumns =
     columns ||
     (tableData[0]
@@ -116,42 +113,33 @@ export const Table: React.FC<TableProps> = ({
         }))
       : []);
 
-  // 🚨 Bad Practice: Table 컴포넌트가 도메인별 렌더링 로직을 알고 있음
   const renderCell = (row: any, columnKey: string) => {
     const value = row[columnKey];
 
-    // 도메인별 특수 렌더링
     if (entityType === "user") {
       if (columnKey === "role") {
-        const roleVariantMap: Record<
-          string,
-          "primary" | "secondary" | "danger" | "warning" | "info"
-        > = {
+        const roleVariantMap: Record<string, any> = {
           admin: "danger",
           moderator: "warning",
           user: "primary",
           guest: "secondary",
         };
-        const variant = roleVariantMap[value as string] || "primary";
         const labelMap: Record<string, string> = {
           admin: "관리자",
           moderator: "운영자",
           user: "사용자",
           guest: "게스트",
         };
-        const label = labelMap[value as string] || value;
-
-        return <Badge variant={variant}>{label}</Badge>;
+        return (
+          <Badge variant={roleVariantMap[value as string] || "primary"}>
+            {labelMap[value as string] || value}
+          </Badge>
+        );
       }
       if (columnKey === "status") {
-        // User status를 Badge status로 변환
-        const valueStr = value as string;
-        const statusVariantMap: Record<
-          string,
-          "success" | "warning" | "danger"
-        > = {
-          active: "success", // published 매핑 대응
-          inactive: "warning", // draft 매핑 대응
+        const statusVariantMap: Record<string, any> = {
+          active: "success",
+          inactive: "warning",
           rejected: "danger",
         };
         const statusLabelMap: Record<string, string> = {
@@ -159,17 +147,15 @@ export const Table: React.FC<TableProps> = ({
           inactive: "비활성",
           rejected: "거부됨",
         };
-
-        const variant = statusVariantMap[valueStr] || "secondary";
-        const label = statusLabelMap[valueStr] || valueStr;
-        return <Badge variant={variant}>{label}</Badge>;
-      }
-      if (columnKey === "lastLogin") {
-        return value || "-";
+        return (
+          <Badge variant={statusVariantMap[value as string] || "secondary"}>
+            {statusLabelMap[value as string] || value}
+          </Badge>
+        );
       }
       if (columnKey === "actions") {
         return (
-          <div style={{ display: "flex", gap: "8px" }}>
+          <div className="flex gap-2">
             <Button size="sm" variant="primary" onClick={() => onEdit?.(row)}>
               수정
             </Button>
@@ -187,26 +173,19 @@ export const Table: React.FC<TableProps> = ({
 
     if (entityType === "post") {
       if (columnKey === "category") {
-        const typeMap: Record<
-          string,
-          "primary" | "secondary" | "danger" | "warning" | "info" | "success"
-        > = {
+        const typeMap: Record<string, any> = {
           development: "primary",
           design: "info",
           accessibility: "danger",
         };
-        const variant = typeMap[value as string] || "secondary";
         return (
-          <Badge variant={variant} pill>
+          <Badge variant={typeMap[value as string] || "secondary"} pill>
             {value}
           </Badge>
         );
       }
       if (columnKey === "status") {
-        const statusMap: Record<
-          string,
-          "primary" | "secondary" | "danger" | "warning" | "info" | "success"
-        > = {
+        const statusMap: Record<string, any> = {
           published: "success",
           draft: "warning",
           archived: "secondary",
@@ -220,16 +199,18 @@ export const Table: React.FC<TableProps> = ({
           pending: "대기중",
           rejected: "거부됨",
         };
-        const variant = statusMap[value as string] || "secondary";
-        const label = labelMap[value as string] || value;
-        return <Badge variant={variant}>{label}</Badge>;
+        return (
+          <Badge variant={statusMap[value as string] || "secondary"}>
+            {labelMap[value as string] || value}
+          </Badge>
+        );
       }
       if (columnKey === "views") {
         return value?.toLocaleString() || "0";
       }
       if (columnKey === "actions") {
         return (
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+          <div className="flex flex-wrap gap-2">
             <Button size="sm" variant="primary" onClick={() => onEdit?.(row)}>
               수정
             </Button>
@@ -272,114 +253,86 @@ export const Table: React.FC<TableProps> = ({
       }
     }
 
-    // React Element면 그대로 렌더링
-    if (React.isValidElement(value)) {
-      return value;
-    }
-
+    if (React.isValidElement(value)) return value;
     return value;
   };
 
   return (
-    <div className="table-container">
+    <div className="flex flex-col gap-4">
       {searchable && (
-        <div style={{ marginBottom: "16px" }}>
+        <div className="flex justify-start">
           <input
             type="text"
             placeholder="검색..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{
-              padding: "8px 12px",
-              border: "1px solid #ddd",
-              borderRadius: "4px",
-              width: "300px",
-            }}
+            className="w-[300px] rounded-[4px] border border-neutral-border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand-primary/20"
           />
         </div>
       )}
 
-      <table className={tableClasses}>
-        <thead>
-          <tr>
+      <Table>
+        <TableHeader>
+          <TableRow hover={false}>
             {actualColumns.map((column) => (
-              <th
+              <TableHead
                 key={column.key}
                 style={column.width ? { width: column.width } : undefined}
+                className={sortable ? "cursor-pointer select-none" : ""}
                 onClick={() => sortable && handleSort(column.key)}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    cursor: sortable ? "pointer" : "default",
-                  }}
-                >
+                <div className="flex items-center gap-1">
                   {column.header}
                   {sortable && sortColumn === column.key && (
-                    <span>{sortDirection === "asc" ? "↑" : "↓"}</span>
+                    <span className="text-[10px]">
+                      {sortDirection === "asc" ? "↑" : "↓"}
+                    </span>
                   )}
                 </div>
-              </th>
+              </TableHead>
             ))}
-          </tr>
-        </thead>
-        <tbody>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {paginatedData.map((row, rowIndex) => (
-            <tr
+            <TableRow
               key={rowIndex}
+              striped={striped}
+              hover={hover}
               onClick={() => onRowClick?.(row)}
-              style={{ cursor: onRowClick ? "pointer" : "default" }}
+              className={onRowClick ? "cursor-pointer" : ""}
             >
               {actualColumns.map((column) => (
-                <td key={column.key}>
+                <TableCell key={column.key}>
                   {entityType ? renderCell(row, column.key) : row[column.key]}
-                </td>
+                </TableCell>
               ))}
-            </tr>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
 
       {totalPages > 1 && (
-        <div
-          style={{
-            marginTop: "16px",
-            display: "flex",
-            gap: "8px",
-            justifyContent: "center",
-          }}
-        >
-          <button
+        <div className="mt-4 flex justify-center gap-2">
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            style={{
-              padding: "6px 12px",
-              border: "1px solid #ddd",
-              background: "white",
-              borderRadius: "4px",
-              cursor: currentPage === 1 ? "not-allowed" : "pointer",
-            }}
           >
             이전
-          </button>
-          <span style={{ padding: "6px 12px" }}>
+          </Button>
+          <div className="flex items-center px-3 text-sm font-medium">
             {currentPage} / {totalPages}
-          </span>
-          <button
+          </div>
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            style={{
-              padding: "6px 12px",
-              border: "1px solid #ddd",
-              background: "white",
-              borderRadius: "4px",
-              cursor: currentPage === totalPages ? "not-allowed" : "pointer",
-            }}
           >
             다음
-          </button>
+          </Button>
         </div>
       )}
     </div>

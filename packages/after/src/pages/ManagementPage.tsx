@@ -17,7 +17,7 @@ import {
 } from "../components/ui/dialog";
 import { CheckCircle, AlertCircle, Info, X } from "lucide-react";
 import { Button } from "../components/ui/button";
-import { Table } from "../components/organisms";
+import { TableContainer } from "../components/table/TableContainer";
 import { UserForm, PostForm } from "../components/forms";
 import { userService } from "../services/userService";
 import { postService } from "../services/postService";
@@ -528,7 +528,7 @@ export const ManagementPage: React.FC = () => {
                 overflow: "auto",
               }}
             >
-              <Table
+              <TableContainer
                 columns={renderTableColumns()}
                 data={data}
                 striped
