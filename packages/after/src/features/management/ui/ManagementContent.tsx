@@ -374,8 +374,8 @@ export const ManagementContent: React.FC = () => {
             </div>
           </div>
 
-          <div className="overflow-auto rounded border border-[#ddd] bg-white [scrollbar-gutter:stable]">
-            <Table>
+          <div className="overflow-auto rounded border border-[#ddd] bg-white">
+            <Table className="[&_th:last-child]:pr-2 [&_td:last-child]:pr-2">
               <TableHeader>
                 <TableRow>
                   {columns.map((col) => (
