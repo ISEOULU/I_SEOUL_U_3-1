@@ -1,0 +1,308 @@
+@import "tailwindcss/theme" reference;
+
+/* 
+  1. Primitive Colors (원시 색상)
+  - 기존 프로젝트(components.css, 인라인 스타일)에서 사용 중이던 하드코딩 색상들을 모아 정의합니다.
+*/
+:root {
+  /* White & Black */
+  --white: #ffffff;
+  --black: #000000;
+
+  /* Gray Scale */
+  --gray-50: #f7fafc; /* App.tsx 배경 */
+  --gray-100: #f5f5f5; /* .card-flat 등 배경 */
+  --gray-150: #f0f0f0; /* ManagementPage 배경 */
+  --gray-200: #e0e0e0; /* 보조 버튼 hover */
+  --gray-300: #ddd; /* 보조 버튼 테두리 */
+  --gray-400: #ccc; /* input 기본 테두리 */
+  --gray-500: #bdbdbd; /* alert-default 테두리 */
+  --gray-600: #757575; /* badge-secondary */
+  --gray-700: #666; /* ManagementPage 서브텍스트 등 */
+  --gray-800: #424242; /* 통계 숫자 등 */
+  --gray-900: #333; /* 기본 텍스트 (form-label, 버튼 등) */
+
+  /* Blue Scale (Primary/Brand) */
+  --blue-50: #e3f2fd; /* alert-info 배경 */
+  --blue-200: #90caf9; /* alert-info 테두리 */
+  --blue-500: #1976d2; /* btn-primary, 통계 수치 등 (Main) */
+  --blue-600: #1565c0; /* btn-primary hover */
+  --blue-800: #0d47a1; /* alert-info 텍스트 */
+
+  /* Green Scale (Success) */
+  --green-50: #e8f5e9; /* alert-success 배경 */
+  --green-200: #81c784; /* alert-success 테두리 */
+  --green-500: #388e3c; /* btn-success, 통계 수치 등 */
+  --green-600: #2e7d32; /* btn-success hover */
+  --green-800: #1b5e20; /* alert-success 텍스트 */
+
+  /* Red Scale (Danger/Error) */
+  --red-50: #ffebee; /* alert-error 배경 */
+  --red-200: #e57373; /* alert-error 테두리 */
+  --red-500: #d32f2f; /* btn-danger, 필수입력 별표 등 */
+  --red-600: #c62828; /* btn-danger hover */
+  --red-800: #b71c1c; /* alert-error 텍스트 */
+
+  /* Orange/Yellow Scale (Warning) */
+  --orange-50: #fff3e0; /* alert-warning 배경 */
+  --orange-200: #ffb74d; /* alert-warning 테두리 */
+  --orange-500: #f57c00; /* badge-warning, 통계 수치 등 */
+  --orange-800: #e65100; /* alert-warning 텍스트 */
+
+  /* Cyan Scale (Info) */
+  --cyan-500: #0288d1; /* badge-info 등 */
+
+  /* Alpha Colors (Shadows & Overlays) */
+  --alpha-black-4: rgba(0, 0, 0, 0.04);
+  --alpha-black-8: rgba(0, 0, 0, 0.08);
+  --alpha-black-12: rgba(0, 0, 0, 0.12);
+  --alpha-black-14: rgba(0, 0, 0, 0.14);
+  --alpha-black-20: rgba(0, 0, 0, 0.2);
+  --alpha-black-50: rgba(0, 0, 0, 0.5);
+  --alpha-black-54: rgba(0, 0, 0, 0.54);
+  --alpha-black-60: rgba(0, 0, 0, 0.6);
+  --alpha-black-87: rgba(0, 0, 0, 0.87);
+}
+
+/* 
+  2. Semantic Colors (시맨틱 색상)
+*/
+:root {
+  /* Backgrounds */
+  --bg-primary: var(--white);
+  --bg-secondary: var(--gray-50);
+  --bg-tertiary: var(--gray-100);
+  --bg-management: var(--gray-150); /* #f0f0f0 특별 매핑 */
+
+  /* Texts */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-700);
+  --text-tertiary: var(--gray-600);
+  --text-inverse: var(--white);
+
+  /* Borders */
+  --border-light: var(--gray-200);
+  --border-base: var(--gray-300);
+  --border-strong: var(--gray-400);
+
+  /* State: Brand/Primary */
+  --brand-light: var(--blue-50);
+  --brand-border: var(--blue-200);
+  --brand-primary: var(--blue-500);
+  --brand-hover: var(--blue-600);
+  --brand-dark: var(--blue-800);
+
+  /* State: Success */
+  --success-light: var(--green-50);
+  --success-border: var(--green-200);
+  --success-primary: var(--green-500);
+  --success-hover: var(--green-600);
+  --success-dark: var(--green-800);
+
+  /* State: Danger/Error */
+  --danger-light: var(--red-50);
+  --danger-border: var(--red-200);
+  --danger-primary: var(--red-500);
+  --danger-hover: var(--red-600);
+  --danger-dark: var(--red-800);
+
+  /* State: Warning */
+  --warning-light: var(--orange-50);
+  --warning-border: var(--orange-200);
+  --warning-primary: var(--orange-500);
+  --warning-dark: var(--orange-800);
+
+  /* State: Info */
+  --info-light: var(--blue-50);
+  --info-border: var(--blue-200);
+  --info-primary: var(--blue-500);
+  --info-dark: var(--blue-800);
+
+  /* State: Neutral (Default/Secondary) */
+  --neutral-light: var(--gray-50);
+  --neutral-bg-strong: var(--gray-100);
+  --neutral-bg-flat: #fafafa; /* Card Flat & Header */
+  --neutral-border: var(--gray-300);
+  --neutral-border-strong: var(--gray-500);
+  --neutral-primary: var(--gray-100);
+  --neutral-hover: var(--gray-200);
+  --neutral-text-body: var(--gray-800);
+  --neutral-dark: var(--gray-900);
+
+  /* Table Specific Tokens */
+  --table-header-bg: var(--neutral-bg-flat);
+  --table-border: var(--alpha-black-12);
+  --table-row-border: var(--alpha-black-8);
+  --table-row-hover: var(--alpha-black-4);
+  --table-row-striped: var(--neutral-bg-flat);
+
+  /* Header Specific Tokens */
+  --header-bg: var(--white);
+  --header-border: var(--gray-200);
+  --header-shadow: 0 1px 3px 0 var(--alpha-black-12);
+
+  /* Card Specific Shadows (Material-like) */
+  --shadow-card-default:
+    0px 2px 1px -1px var(--alpha-black-20),
+    0px 1px 1px 0px var(--alpha-black-14), 0px 1px 3px 0px var(--alpha-black-12);
+  --shadow-card-elevated:
+    0px 2px 4px -1px var(--alpha-black-12),
+    0px 1px 2px 0px var(--alpha-black-8), 0px 1px 4px 0px var(--alpha-black-8);
+
+  /* Alpha Semantic Tokens (Mapping to Primitives) */
+  --alpha-border: var(--alpha-black-12);
+  --alpha-border-light: var(--alpha-black-8);
+  --alpha-text-primary: var(--alpha-black-87);
+  --alpha-text-secondary: var(--alpha-black-60);
+  --alpha-overlay: var(--alpha-black-50);
+
+  /* Modal Specific Shadows */
+  --shadow-modal:
+    0px 11px 15px -7px var(--alpha-black-20),
+    0px 24px 38px 3px var(--alpha-black-14),
+    0px 9px 46px 8px var(--alpha-black-12);
+}
+
+/* 
+  3. 다크모드 (추후 확장용)
+*/
+.dark {
+  /* Backgrounds */
+  --bg-primary: #121212;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #242424;
+  --bg-management: #0d0d0d;
+
+  /* Texts */
+  --text-primary: #f5f5f5;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --text-inverse: var(--gray-900);
+
+  /* Borders */
+  --border-light: #2c2c2c;
+  --border-base: #383838;
+  --border-strong: #4a4a4a;
+
+  /* Alpha Semantic Overrides (White Alpha for Dark Mode) */
+  --alpha-border: rgba(255, 255, 255, 0.12);
+  --alpha-border-light: rgba(255, 255, 255, 0.08);
+  --alpha-text-primary: rgba(255, 255, 255, 0.87);
+  --alpha-text-secondary: rgba(255, 255, 255, 0.6);
+  --alpha-overlay: rgba(0, 0, 0, 0.7);
+
+  /* Neutral Overrides */
+  --neutral-bg-strong: #242424;
+  --neutral-bg-flat: #1a1a1a;
+  --neutral-border: #383838;
+  --neutral-text-body: #f5f5f5;
+
+  /* Table Specific Overrides */
+  --table-header-bg: #1a1a1a;
+  --table-border: var(--alpha-border);
+  --table-row-border: var(--alpha-border-light);
+  --table-row-hover: rgba(255, 255, 255, 0.04);
+  --table-row-striped: #141414;
+
+  /* Header Specific Overrides */
+  --header-bg: #121212;
+  --header-border: #2c2c2c;
+  --header-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+
+  /* Shadows for Dark Mode (Less intense, more spread) */
+  --shadow-card-default: 0px 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-card-elevated: 0px 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --shadow-modal: 0px 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* 
+  4. Tailwind v4 Theme Extension
+*/
+@theme inline {
+  /* Background Colors */
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-bg-management: var(--bg-management);
+
+  /* Text Colors */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-inverse: var(--text-inverse);
+
+  /* Border Colors */
+  --color-border-light: var(--border-light);
+  --color-border-base: var(--border-base);
+  --color-border-strong: var(--border-strong);
+
+  /* Brand Colors */
+  --color-brand-light: var(--brand-light);
+  --color-brand-border: var(--brand-border);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-dark: var(--brand-dark);
+
+  /* Success Colors */
+  --color-success-light: var(--success-light);
+  --color-success-border: var(--success-border);
+  --color-success-primary: var(--success-primary);
+  --color-success-hover: var(--success-hover);
+  --color-success-dark: var(--success-dark);
+
+  /* Danger Colors */
+  --color-danger-light: var(--danger-light);
+  --color-danger-border: var(--danger-border);
+  --color-danger-primary: var(--danger-primary);
+  --color-danger-hover: var(--danger-hover);
+  --color-danger-dark: var(--danger-dark);
+
+  /* Warning Colors */
+  --color-warning-light: var(--warning-light);
+  --color-warning-border: var(--warning-border);
+  --color-warning-primary: var(--warning-primary);
+  --color-warning-dark: var(--warning-dark);
+
+  /* Info Colors */
+  --color-info-light: var(--info-light);
+  --color-info-border: var(--info-border);
+  --color-info-primary: var(--info-primary);
+  --color-info-dark: var(--info-dark);
+
+  /* Neutral Colors */
+  --color-neutral-light: var(--neutral-light);
+  --color-neutral-bg-strong: var(--neutral-bg-strong);
+  --color-neutral-bg-flat: var(--neutral-bg-flat);
+  --color-neutral-border: var(--neutral-border);
+  --color-neutral-border-strong: var(--neutral-border-strong);
+  --color-neutral-primary: var(--neutral-primary);
+  --color-neutral-hover: var(--neutral-hover);
+  --color-neutral-text-body: var(--neutral-text-body);
+  --color-neutral-dark: var(--neutral-dark);
+
+  /* Table Colors */
+  --color-table-header-bg: var(--table-header-bg);
+  --color-table-border: var(--table-border);
+  --color-table-row-border: var(--table-row-border);
+  --color-table-row-hover: var(--table-row-hover);
+  --color-table-row-striped: var(--table-row-striped);
+
+  /* Header Colors */
+  --color-header-bg: var(--header-bg);
+  --color-header-border: var(--header-border);
+  --shadow-header: var(--header-shadow);
+
+  /* Alpha Colors */
+  --color-alpha-border: var(--alpha-border);
+  --color-alpha-border-light: var(--alpha-border-light);
+  --color-alpha-text-primary: var(--alpha-text-primary);
+  --color-alpha-text-secondary: var(--alpha-text-secondary);
+  --color-alpha-overlay: var(--alpha-overlay);
+
+  /* Card Shadows */
+  --shadow-card-default: var(--shadow-card-default);
+  --shadow-card-elevated: var(--shadow-card-elevated);
+
+  /* Modal Shadows */
+  --shadow-modal: var(--shadow-modal);
+}
